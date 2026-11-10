@@ -1,0 +1,12 @@
+numpy==2.3.0
+pandas
+pyreadstat
+duckdb
+xgboost
+shap
+plotly
+ydata-profiling
+folium
+scikit-learn
+matplotlib
+seaborn

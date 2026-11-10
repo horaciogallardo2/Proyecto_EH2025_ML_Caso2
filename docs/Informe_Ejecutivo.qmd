@@ -1,0 +1,44 @@
+---
+title: "Informe Ejecutivo: Factores Determinantes de la Informalidad Laboral en Bolivia"
+subtitle: "Análisis Multidimensional y Modelado Predictivo - EH2025"
+author: "Científico de Datos Senior"
+date: last-modified
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    code-fold: true
+---
+
+## 1. Introducción y Contexto
+La informalidad laboral representa uno de los retos estructurales más complejos en Bolivia. El presente informe examina los determinantes del empleo formal a partir de un enfoque cuantitativo, integrando variables sociodemográficas, de ingresos y un **Índice de Pobreza Multidimensional (IPM)** simplificado.
+
+> **Citación Oficial:**
+> Fuente: Instituto Nacional de Estadística (INE), Encuesta de Hogares 2025 - [http://anda.ine.gob.bo/index.php/catalog/256](http://anda.ine.gob.bo/index.php/catalog/256)
+
+## 2. Storytelling & Insights Clave
+
+### El Umbral de la Educación
+Nuestros análisis descriptivos y los modelos predictivos revelan que existe un **punto de inflexión crítico a los 12 años de estudio** (equivalente al bachillerato). Superar este umbral educativo incrementa exponencialmente el acceso al empleo formal y actúa como el principal escudo protector frente a la precariedad laboral.
+
+### La Trampa de la Pobreza Multidimensional
+El análisis de clustering con K-Means logró clasificar a la población en perfiles de vulnerabilidad bien definidos. La correlación negativa extrema entre el IPM y el empleo formal consolida una "trampa de pobreza": los hogares con mayor privación en salud y educación quedan sistemáticamente excluidos de los esquemas de afiliación a la Gestora/AFP, autoperpetuando la informalidad.
+
+## 3. Desempeño del Modelo Predictivo
+
+Se evaluaron modelos basados en ensambles y boosting con validación cruzada estratificada:
+
+* **Modelo Ganador:** XGBoost (`AUC-ROC = 0.9028`)
+* **Precision-Recall AUC (PR-AUC):** `0.6578`, evidenciando un desempeño altamente confiable bajo escenarios de desbalance de clases (donde la formalidad representa solo el 13.1% de la muestra).
+
+## 4. Recomendaciones de Política Pública Basadas en Evidencia
+
+### Recomendación 1: Programa Nacional de Bachillerato y Certificación de Competencias
+Dado que los años de estudio (`aestudio`) representan la variable con mayor peso predictivo según el análisis SHAP, se recomienda estructurar un plan nacional de finalización de estudios secundarios y educación técnica simplificada dirigida a jóvenes del sector informal. **Lograr que la población alcance el umbral de los 12 años de educación formal reducirá estructuralmente la propensión a la informalidad.**
+
+### Recomendación 2: Universalización de la Cobertura del Seguro de Salud Vinculado al Empleo Independiente
+La carencia en salud es un componente de alto peso en el IPM. Facilitar mecanismos simplificados y subsidiados para la autoafiliación médica e independiente en la Gestora/AFP desvinculará la protección social de la relación laboral tradicional obrero-patronal, expandiendo la red de seguridad social.
+
+### Recomendación 3: Estímulos Fiscales Focalizados por Departamento
+Considerando las brechas regionales evidenciadas en el mapa geoespacial y el gráfico Sunburst (donde departamentos específicos muestran tasas de informalidad superiores al 89%), se aconseja implementar incentivos fiscales y de simplificación de trámites focalizados en las regiones con menor presencia de empleo formal corporativo para dinamizar la creación de empleo de calidad.
