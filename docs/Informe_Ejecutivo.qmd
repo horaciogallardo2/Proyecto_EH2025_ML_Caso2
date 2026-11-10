@@ -1,44 +1,68 @@
 ---
-title: "Informe Ejecutivo: Factores Determinantes de la Informalidad Laboral en Bolivia"
-subtitle: "Análisis Multidimensional y Modelado Predictivo - EH2025"
-author: "Científico de Datos Senior"
-date: last-modified
+title: "Informe Ejecutivo: Pobreza Multidimensional e Informalidad Laboral en Bolivia"
+subtitle: "Análisis de la Encuesta de Hogares 2025 (EH2025) y Modelado Predictivo"
+author: "Científico de Datos & Economista Principal"
+date: today
 format:
-  html:
-    theme: cosmo
-    toc: true
-    toc-depth: 3
-    code-fold: true
+  typst:
+    papersize: us-letter
+    margin-left: 2cm
+    margin-right: 2cm
+    margin-top: 2.5cm
+    margin-bottom: 2.5cm
+    columns: 1
 ---
 
-## 1. Introducción y Contexto
-La informalidad laboral representa uno de los retos estructurales más complejos en Bolivia. El presente informe examina los determinantes del empleo formal a partir de un enfoque cuantitativo, integrando variables sociodemográficas, de ingresos y un **Índice de Pobreza Multidimensional (IPM)** simplificado.
+## Portada y Citación Obligatoria
+Este reporte presenta la caracterización del mercado laboral boliviano mediante la integración de analítica avanzada de datos y machine learning.
 
-> **Citación Oficial:**
-> Fuente: Instituto Nacional de Estadística (INE), Encuesta de Hogares 2025 - [http://anda.ine.gob.bo/index.php/catalog/256](http://anda.ine.gob.bo/index.php/catalog/256)
+* **Cita Obligatoria:** 
+  *Fuente: Instituto Nacional de Estadística, Encuesta de Hogares 2025 - [http://anda.ine.gob.bo/index.php/catalog/256](http://anda.ine.gob.bo/index.php/catalog/256)*
 
-## 2. Storytelling & Insights Clave
+---
 
-### El Umbral de la Educación
-Nuestros análisis descriptivos y los modelos predictivos revelan que existe un **punto de inflexión crítico a los 12 años de estudio** (equivalente al bachillerato). Superar este umbral educativo incrementa exponencialmente el acceso al empleo formal y actúa como el principal escudo protector frente a la precariedad laboral.
+## Sección 1: Hallazgos Clave, Patrones y Segmentación Socioeconómica
 
-### La Trampa de la Pobreza Multidimensional
-El análisis de clustering con K-Means logró clasificar a la población en perfiles de vulnerabilidad bien definidos. La correlación negativa extrema entre el IPM y el empleo formal consolida una "trampa de pobreza": los hogares con mayor privación en salud y educación quedan sistemáticamente excluidos de los esquemas de afiliación a la Gestora/AFP, autoperpetuando la informalidad.
+El análisis descriptivo y de agrupamiento no supervisado revela heterogeneidades críticas a nivel geográfico y social en Bolivia:
 
-## 3. Desempeño del Modelo Predictivo
+1. **Distribución Geográfica de la Informalidad:** El mapa de informalidad promedia tasas superiores al 84% en todo el territorio nacional, alcanzando niveles alarmantes cercanos al 89% en departamentos como Pando, Beni y Oruro. Esto evidencia que la informalidad no es un fenómeno aislado de la ruralidad, sino una característica estructural dominante del mercado laboral boliviano.
+2. **Deconstrucción Empírica de los Clusters (K-Means):** Utilizando el método del codo se determinó un $K=3$ óptimo, segmentando a los hogares en perfiles robustos de vulnerabilidad:
+   - **Cluster de Vulnerabilidad Extrema:** Caracterizado por ingresos laborales cercanos a cero, un nivel educativo inferior al nivel primario completo (menos de 5 años de escolaridad) y privaciones severas reflejadas en un alto IPM Simplificado. 
+   - **Cluster de Transición Informal:** Hogares con educación secundaria incompleta y un nivel moderado de privación, que oscilan en el subempleo informal.
+   - **Cluster de Estabilidad Formal:** Segmento minoritario con alta escolaridad (educación superior) e inserción en el empleo formal.
 
-Se evaluaron modelos basados en ensambles y boosting con validación cruzada estratificada:
+![Análisis de Clustering K-Means y Distribución de Población](outputs/clusters_3D.png){width=85%}
 
-* **Modelo Ganador:** XGBoost (`AUC-ROC = 0.9028`)
-* **Precision-Recall AUC (PR-AUC):** `0.6578`, evidenciando un desempeño altamente confiable bajo escenarios de desbalance de clases (donde la formalidad representa solo el 13.1% de la muestra).
+## Sección 2: Evidencia del Modelo y Explicabilidad (SHAP)
 
-## 4. Recomendaciones de Política Pública Basadas en Evidencia
+Se entrenaron y validaron de manera cruzada modelos supervisados basados en árboles de decisión para predecir la probabilidad de empleo formal:
+- **Desempeño Comparativo:** El clasificador **XGBoost** superó marginalmente a Random Forest, obteniendo una **Media de AUC-ROC de 0.9028** en validación cruzada. 
+- **Métricas de Rigor:** En el set de prueba final, el modelo alcanzó un **F1-Score para el empleo formal de 0.59** y un **Precision-Recall AUC (PR-AUC) de 0.6578**, lo cual denota un desempeño sobresaliente considerando el severo desbalance de la muestra (donde la clase formal representa solo el 13.12%).
 
-### Recomendación 1: Programa Nacional de Bachillerato y Certificación de Competencias
-Dado que los años de estudio (`aestudio`) representan la variable con mayor peso predictivo según el análisis SHAP, se recomienda estructurar un plan nacional de finalización de estudios secundarios y educación técnica simplificada dirigida a jóvenes del sector informal. **Lograr que la población alcance el umbral de los 12 años de educación formal reducirá estructuralmente la propensión a la informalidad.**
+### Análisis de Explicabilidad desde Primeros Principios
 
-### Recomendación 2: Universalización de la Cobertura del Seguro de Salud Vinculado al Empleo Independiente
-La carencia en salud es un componente de alto peso en el IPM. Facilitar mecanismos simplificados y subsidiados para la autoafiliación médica e independiente en la Gestora/AFP desvinculará la protección social de la relación laboral tradicional obrero-patronal, expandiendo la red de seguridad social.
+El análisis basado en valores de Shapley (SHAP) cuantifica rigurosamente el impacto marginal de cada variable predictora:
 
-### Recomendación 3: Estímulos Fiscales Focalizados por Departamento
-Considerando las brechas regionales evidenciadas en el mapa geoespacial y el gráfico Sunburst (donde departamentos específicos muestran tasas de informalidad superiores al 89%), se aconseja implementar incentivos fiscales y de simplificación de trámites focalizados en las regiones con menor presencia de empleo formal corporativo para dinamizar la creación de empleo de calidad.
+![Distribución del Impacto de Variables (SHAP)](outputs/shap_summary.png){width=85%}
+
+- **Años de Estudio (`aestudio`):** Se consolida como el factor más determinante. Como se observa en el gráfico de dependencia, existe un **efecto umbral crítico en torno a los 12 años de escolaridad** (conclusión del bachillerato). Superar este punto genera un salto discreto y positivo en la probabilidad de acceso al mercado formal.
+- **Ingreso Laboral (`ylab`):** Actúa de forma complementaria. Mayores ingresos están sistemáticamente asociados a sectores formales altamente productivos.
+- **Índice de Pobreza Multidimensional (`IPM_simplificado`):** Muestra un impacto marcadamente negativo. Las carencias en salud y educación atrapan a la población en círculos viciosos de autoperpetuación de la informalidad.
+
+![Efecto Umbral en Años de Estudio (SHAP Dependence)](outputs/shap_dependence.png){width=70%}
+
+## Sección 3: Recomendaciones de Política Pública Basadas en Evidencia
+
+Conectando la modelación predictiva con marcos de economía del desarrollo, formulamos tres propuestas clave:
+
+### 1. Programa Nacional de Transición Educativa y Bachillerato Acelerado
+- **Evidencia Empírica:** Los años de estudio son el predictor número uno con un umbral crítico de 12 años.
+- **Acción:** Diseñar programas focalizados de educación técnica y regularización de bachillerato semipresencial para jóvenes y adultos subempleados, subsidiando el costo de oportunidad de asistencia mediante transferencias monetarias condicionadas.
+
+### 2. Desvinculación de la Cobertura de Salud del Estatus Laboral (Universalización Activa)
+- **Evidencia Empírica:** La carencia en salud y el IPM muestran un peso restrictivo directo en el modelo predictivo formal.
+- **Acción:** Reformar el sistema de aportes a la seguridad social de corto plazo (salud) para permitir una autoafiliación flat-rate o subsidiada para trabajadores independientes, eliminando la barrera de entrada burocrática obrero-patronal.
+
+### 3. Incentivos de Formalización y Simplificación en Regiones de Alta Precariedad
+- **Evidencia Empírica:** Existe una alta variabilidad y penalización de la formalidad según el departamento geográfico (`depto`).
+- **Acción:** Implementar zonas económicas de formalización con régimen tributario unificado simplificado en departamentos periféricos (como Beni o Pando) para incentivar el registro y afiliación a la Gestora de microempresas regionales.
